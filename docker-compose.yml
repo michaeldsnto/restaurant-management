@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: rms-backend
+    env_file:
+      - backend/.env
+    depends_on:
+      - mysql
+      - redis
+    ports:
+      - "8000:80"
+    volumes:
+      - ./backend:/var/www/html
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: rms-frontend
+    ports:
+      - "4173:80"
+
+  mysql:
+    image: mysql:8.4
+    container_name: rms-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: restaurant_management_system
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  redis:
+    image: redis:7-alpine
+    container_name: rms-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+volumes:
+  mysql_data:
