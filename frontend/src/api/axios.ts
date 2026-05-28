@@ -1,20 +1,16 @@
-import axios from "axios"
+import axios from "axios";
+
+import { API_BASE_URL } from "@/app/config/env";
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL ?? "http://127.0.0.1:8000/api/v1",
+  baseURL: API_BASE_URL,
+
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
   },
-  withCredentials: false,
-})
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("rms_access_token")
+  withCredentials: true,
 
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
-  }
-
-  return config
-})
+  timeout: 30000,
+});
