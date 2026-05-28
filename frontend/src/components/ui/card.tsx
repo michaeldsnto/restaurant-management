@@ -1,15 +1,28 @@
-import type { HTMLAttributes } from "react"
+import clsx from "clsx";
 
-import { cn } from "@/lib/utils"
+type Props = {
 
-export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+  children: React.ReactNode;
+
+  className?: string;
+
+};
+
+export default function Card({
+  children,
+  className,
+}: Props) {
+
   return (
+
     <div
-      className={cn(
-        "rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.04))] shadow-[0_18px_60px_rgba(3,7,18,0.28)] backdrop-blur-xl",
-        className,
+      className={clsx(
+        "rounded-3xl border border-zinc-800 bg-zinc-900/40 p-6",
+        className
       )}
-      {...props}
-    />
-  )
+    >
+      {children}
+    </div>
+
+  );
 }

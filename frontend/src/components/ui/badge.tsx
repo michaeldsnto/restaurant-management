@@ -1,32 +1,46 @@
-import type { HTMLAttributes } from "react"
+import clsx from "clsx";
 
-import { cn } from "@/lib/utils"
+type Variant =
+  | "default"
+  | "success"
+  | "danger";
 
-type BadgeTone = "success" | "warning" | "info" | "neutral"
+type Props = {
 
-const toneClasses: Record<BadgeTone, string> = {
-  success: "bg-emerald-400/15 text-emerald-200 ring-emerald-300/20",
-  warning: "bg-amber-400/15 text-amber-200 ring-amber-300/20",
-  info: "bg-sky-400/15 text-sky-200 ring-sky-300/20",
-  neutral: "bg-white/10 text-zinc-200 ring-white/10",
-}
+  children: React.ReactNode;
 
-export function Badge({
-  className,
+  variant?: Variant;
+
+};
+
+const variants = {
+
+  default:
+    "bg-zinc-800 text-zinc-300",
+
+  success:
+    "bg-emerald-500/15 text-emerald-400",
+
+  danger:
+    "bg-red-500/15 text-red-400",
+
+};
+
+export default function Badge({
   children,
-  tone = "neutral",
-  ...props
-}: HTMLAttributes<HTMLSpanElement> & { tone?: BadgeTone }) {
+  variant = "default",
+}: Props) {
+
   return (
+
     <span
-      className={cn(
-        "inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ring-1",
-        toneClasses[tone],
-        className,
+      className={clsx(
+        "inline-flex rounded-full px-3 py-1 text-xs font-medium",
+        variants[variant]
       )}
-      {...props}
     >
       {children}
     </span>
-  )
+
+  );
 }

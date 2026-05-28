@@ -1,34 +1,93 @@
-import type { ButtonHTMLAttributes } from "react"
+import clsx from "clsx";
 
-import { cn } from "@/lib/utils"
+type Variant =
+  | "primary"
+  | "secondary"
+  | "danger"
+  | "ghost";
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "secondary" | "ghost"
-}
+type Size =
+  | "sm"
+  | "md"
+  | "lg";
 
-const variants: Record<NonNullable<ButtonProps["variant"]>, string> = {
+type Props =
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+
+    variant?: Variant;
+
+    size?: Size;
+
+    loading?: boolean;
+
+  };
+
+const variants = {
+
   primary:
-    "bg-amber-400 text-zinc-950 hover:bg-amber-300 shadow-[0_12px_30px_rgba(251,191,36,0.18)]",
-  secondary:
-    "bg-white/8 text-white ring-1 ring-white/10 hover:bg-white/12",
-  ghost: "bg-transparent text-zinc-300 hover:bg-white/5",
-}
+    "bg-violet-600 text-white hover:bg-violet-500 shadow-lg shadow-violet-600/20",
 
-export function Button({
-  className,
+  secondary:
+    "bg-zinc-900 border border-zinc-800 text-white hover:bg-zinc-800",
+
+  danger:
+    "bg-red-600 text-white hover:bg-red-500",
+
+  ghost:
+    "text-zinc-300 hover:bg-zinc-900",
+
+};
+
+const sizes = {
+
+  sm: "h-10 px-4 text-sm",
+
+  md: "h-12 px-5 text-sm",
+
+  lg: "h-14 px-6 text-base",
+
+};
+
+export default function Button({
+  children,
   variant = "primary",
-  type = "button",
+  size = "md",
+  loading = false,
+  className,
+  disabled,
   ...props
-}: ButtonProps) {
+}: Props) {
+
   return (
+
     <button
-      type={type}
-      className={cn(
-        "inline-flex items-center justify-center rounded-2xl px-4 py-2.5 text-sm font-semibold transition duration-200 disabled:pointer-events-none disabled:opacity-50",
+      disabled={disabled || loading}
+      className={clsx(
+        "inline-flex items-center justify-center rounded-2xl font-medium transition-all outline-none disabled:cursor-not-allowed disabled:opacity-60",
         variants[variant],
-        className,
+        sizes[size],
+        className
       )}
       {...props}
-    />
-  )
+    >
+
+      {loading ? (
+
+        <div className="
+          h-5
+          w-5
+          animate-spin
+          rounded-full
+          border-2
+          border-white
+          border-t-transparent
+        " />
+
+      ) : (
+        children
+      )}
+
+    </button>
+
+  );
 }
