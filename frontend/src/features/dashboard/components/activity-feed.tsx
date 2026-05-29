@@ -1,36 +1,77 @@
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import type { ActivityItem } from "@/types/dashboard"
+const activities = [
 
-const toneMap = {
-  success: "success",
-  warning: "warning",
-  info: "info",
-} as const
+  "New order received from table A12",
 
-export function ActivityFeed({ items }: { items: ActivityItem[] }) {
+  "Kitchen completed order #3021",
+
+  "Inventory stock updated",
+
+  "New reservation created",
+
+];
+
+export default function ActivityFeed() {
+
   return (
-    <Card className="p-5">
-      <div className="mb-4 flex items-center justify-between">
-        <div>
-          <h3 className="text-lg font-semibold text-white">Operational activity</h3>
-          <p className="text-sm text-zinc-400">Live operational feed across dining, kitchen, and online orders.</p>
-        </div>
+
+    <div className="
+      rounded-3xl
+      border
+      border-zinc-800
+      bg-zinc-900/50
+      p-6
+    ">
+
+      <h3 className="
+        text-lg
+        font-semibold
+        text-white
+      ">
+        Activity Feed
+      </h3>
+
+      <div className="
+        mt-6
+        space-y-5
+      ">
+
+        {activities.map(
+          (
+            activity,
+            index
+          ) => (
+
+            <div
+              key={index}
+              className="
+                flex
+                gap-4
+              "
+            >
+
+              <div className="
+                mt-2
+                h-2
+                w-2
+                rounded-full
+                bg-emerald-400
+              " />
+
+              <p className="
+                text-sm
+                text-zinc-300
+              ">
+                {activity}
+              </p>
+
+            </div>
+
+          )
+        )}
+
       </div>
 
-      <div className="space-y-3">
-        {items.map((item) => (
-          <div key={item.id} className="rounded-2xl border border-white/8 bg-white/5 p-4">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <p className="font-medium text-white">{item.title}</p>
-                <p className="mt-1 text-sm text-zinc-400">{item.description}</p>
-              </div>
-              <Badge tone={toneMap[item.status]}>{item.time}</Badge>
-            </div>
-          </div>
-        ))}
-      </div>
-    </Card>
-  )
+    </div>
+
+  );
 }
