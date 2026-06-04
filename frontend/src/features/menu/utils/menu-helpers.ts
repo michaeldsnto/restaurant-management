@@ -1,0 +1,23 @@
+export function formatPrice(
+    price: number
+) {
+    return new Intl.NumberFormat(
+        "id-ID",
+        {
+            style:
+                "currency",
+            currency:
+                "IDR",
+            maximumFractionDigits:
+                0,
+        }
+    ).format(price);
+}
+
+export function formatMenuStatus(
+    active: boolean
+) {
+    return active
+        ? "Available"
+        : "Unavailable";
+}
